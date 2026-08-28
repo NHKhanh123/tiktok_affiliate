@@ -78,7 +78,7 @@
 
 <div class="login-box">
 
-    <h1>Admin Login</h1>
+    <h1>Login</h1>
 
     @if ($errors->any())
         <div class="error">
@@ -122,6 +122,24 @@
 
         </div>
 
+        <div class="form-group">
+
+            <label style="
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 8px;
+                width: auto;
+                margin: 0;">
+                <input
+                    type="checkbox"
+                    name="remember"
+                    value="1"
+                    style="margin: 0;">
+               <span style="white-space: nowrap;">Ghi nhớ đăng nhập</span>
+            </label>
+        </div>
         <button type="submit">
             Đăng nhập
         </button>

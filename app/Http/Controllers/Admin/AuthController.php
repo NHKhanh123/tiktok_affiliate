@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-     public function showLogin()
+    public function showLogin()
     {
         return view('admin.auth.login');
     }
@@ -20,21 +20,42 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt([
-            'email' => $credentials['email'],
-            'password' => $credentials['password'],
-            'role' => 'admin',
-        ])) {
-            $request->session()->regenerate();
+        $remember = $request->boolean('remember');
 
-            return redirect()->intended('/admin/dashboard');
+        if (!Auth::attempt(
+            [
+                'email' => $credentials['email'],
+                'password' => $credentials['password'],
+                'role' => 'admin',
+            ],
+            $remember
+        )) {
+
+            return back()
+                ->withErrors([
+                    'email' => 'Email hoặc mật khẩu không chính xác.',
+                ])
+                ->onlyInput('email');
         }
 
-        return back()
-            ->withErrors([
-                'email' => 'Email hoặc mật khẩu không chính xác.',
-            ])
-            ->onlyInput('email');
+        $user = Auth::user();
+
+        if (!$user->email_verified_at) {
+
+            Auth::logout();
+
+            return back()
+                ->withErrors([
+                    'email' => 'Email chưa được xác minh.',
+                ])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(
+            route('admin.dashboard')
+        );
     }
 
     public function logout(Request $request)
@@ -42,6 +63,7 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect()->route('admin.login');
