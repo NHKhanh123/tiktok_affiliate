@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,10 +19,9 @@ Route::prefix('admin')->group(function () {
         ->name('admin.logout');
 
     Route::middleware('admin')->group(function () {
-        Route::get(
-            '/dashboard',
-            [DashboardController::class, 'index']
-        )->name('admin.dashboard');
+        Route::get('/dashboard', function () {
+            return 'Dashboard';
+        })->name('admin.dashboard');
 
         Route::get('/products', function () {
             return 'Products';
