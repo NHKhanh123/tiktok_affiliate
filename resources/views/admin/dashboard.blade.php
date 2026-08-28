@@ -1,36 +1,82 @@
-<!DOCTYPE html>
-<html lang="vi">
+@extends('admin.layouts.app')
 
-<head>
-    <meta charset="UTF-8">
+@section('title', 'Admin Dashboard')
 
-    <title>Admin Dashboard</title>
-</head>
+@section('page-title', 'Dashboard')
 
-<body>
+@section('content')
 
-    <h1>Admin Dashboard</h1>
+<div class="stats">
 
-    <p>
-        Xin chào,
-        {{ auth()->user()->name }}
-    </p>
+    <div class="card">
 
-    <p>
-        Bạn đã đăng nhập thành công với quyền Admin.
-    </p>
+        <div class="card-title">
+            Tổng sản phẩm
+        </div>
 
-    <form
-        method="POST"
-        action="{{ route('admin.logout') }}"
-    >
-        @csrf
+        <div class="card-value">
+            {{ number_format($totalProducts) }}
+        </div>
 
-        <button type="submit">
-            Đăng xuất
-        </button>
-    </form>
+    </div>
 
-</body>
 
-</html>
+    <div class="card">
+
+        <div class="card-title">
+            Tổng lượt click
+        </div>
+
+        <div class="card-value">
+           {{ number_format($totalClicks) }}
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Đơn hàng
+        </div>
+
+        <div class="card-value">
+            {{ number_format($totalOrders) }}
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Hoa hồng tháng này
+        </div>
+
+        <div class="card-value">
+            {{ number_format($monthlyCommission, 0, ',', '.') }}đ
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <div class="card">
+
+        <h2>
+            Tổng quan Affiliate
+        </h2>
+
+        <p>
+            Đây là khu vực thống kê hiệu quả
+            tiếp thị liên kết.
+        </p>
+
+    </div>
+
+</div>
+
+@endsection
