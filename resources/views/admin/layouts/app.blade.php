@@ -204,41 +204,41 @@
                 Dashboard
             </a>
 
-            <a href="{{ route('admin.products') }}">
+            <a href="">
                 Sản phẩm
             </a>
 
-            <a href="{{ route('admin.categories') }}">
+            <a href="">
                 Danh mục
             </a>
 
-            <a href="{{ route('admin.affiliate-links') }} ">
+            <a href=" ">
                 Affiliate Links
             </a>
 
-            <a href="{{ route('admin.clicks') }}">
+            <a href="">
                 Click
             </a>
 
-            <a href="{{ route('admin.orders') }}">
+            <a href="">
                 Đơn hàng
             </a>
 
-            <a href="{{ route('admin.commissions') }}">
+            <a href="">
                 Hoa hồng
             </a>
 
-            <a href="{{ route('admin.withdrawals') }}">
+            <a href="">
                 Rút tiền
             </a>
 
-            <a href="{{ route('admin.settings') }}">
+            <a href="">
                 Cài đặt
             </a>
 
             <form
                 method="POST"
-                action="{{ route('admin.logout') }}"
+                action="{{ route('logout') }}"
                 style="padding: 10px 22px;"
             >
 
