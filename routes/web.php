@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\TikTok\TikTokController;
 
 
 /*
@@ -163,4 +164,14 @@ Route::prefix('admin')
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
 
-    });
+});
+
+Route::get(
+    '/tiktok/authorize',
+    [TikTokController::class, 'authorize']
+)->name('tiktok.authorize');
+
+Route::get(
+    '/tiktok/callback',
+    [TikTokController::class, 'callback']
+)->name('tiktok.callback');
