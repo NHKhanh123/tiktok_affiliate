@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\TikTok\TikTokController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 /*
@@ -164,7 +165,25 @@ Route::prefix('admin')
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
 
-});
+           /*
+        |--------------------------------------------------------------------------
+        | Category Management
+        |--------------------------------------------------------------------------
+        */
+
+        // Route::resource(
+        //     'categories',
+        //     CategoryController::class
+        // );
+
+        Route::get('/categories/index', [CategoryController::class, 'index'])->name('admin.categories.index');  
+        Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+        Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('admin.categories.show');
+    });
 
 Route::get(
     '/tiktok/authorize',

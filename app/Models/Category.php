@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -15,12 +16,35 @@ class Category extends Model
         'status',
     ];
 
-    protected $casts = [
-        'status' => 'boolean',
-    ];
 
+    protected function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
+    }
+
+
+    /**
+     * Các sản phẩm thuộc danh mục
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+
+    /**
+     * Tự động tạo slug khi tạo category
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Category $category) {
+
+            if (empty($category->slug)) {
+                $category->slug = Str::slug($category->name);
+            }
+
+        });
     }
 }

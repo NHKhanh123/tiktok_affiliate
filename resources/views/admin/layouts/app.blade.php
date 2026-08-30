@@ -1,299 +1,532 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        @yield('title', 'Admin Dashboard')
+        @yield('title', 'Admin')
     </title>
 
     <style>
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
         }
+
+
+        /* =========================
+       LAYOUT
+    ========================= */
 
         .admin-layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+
+        /* =========================
+       SIDEBAR
+    ========================= */
 
         .sidebar {
             width: 250px;
             background: #111827;
             color: white;
             position: fixed;
-            left: 0;
             top: 0;
+            left: 0;
             bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
         }
 
-        .logo {
-            padding: 22px;
-            font-size: 20px;
-            font-weight: bold;
+
+        /* LOGO */
+
+        .sidebar-logo {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
             border-bottom: 1px solid #374151;
         }
 
-        .menu {
-            padding: 15px 0;
+        .sidebar-logo h2 {
+            font-size: 20px;
+            font-weight: 700;
         }
 
-        .menu a {
-            display: block;
-            padding: 13px 22px;
+        .sidebar-logo span {
+            color: #60a5fa;
+        }
 
+
+        /* MENU */
+
+        .sidebar-menu {
+            padding: 20px 12px;
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            margin: 10px 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 13px;
+            margin-bottom: 4px;
+            border-radius: 7px;
             color: #d1d5db;
             text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
         }
 
-        .menu a:hover {
+        .menu-item:hover {
             background: #1f2937;
             color: white;
         }
 
-        .menu .active {
+        .menu-item.active {
             background: #2563eb;
             color: white;
         }
 
-        /* MAIN */
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+
+        /* SIDEBAR BOTTOM */
+
+        .sidebar-bottom {
+            padding: 15px 12px;
+            border-top: 1px solid #374151;
+        }
+
+
+        /* =========================
+       MAIN
+    ========================= */
 
         .main {
             margin-left: 250px;
             width: calc(100% - 250px);
+            min-height: 100vh;
         }
 
-        /* HEADER */
 
-        .header {
+        /* =========================
+       HEADER
+    ========================= */
+
+        .topbar {
             height: 70px;
             background: white;
-
+            border-bottom: 1px solid #e5e7eb;
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 25px;
-
-            border-bottom: 1px solid #e5e7eb;
+            padding: 0 30px;
         }
 
-        .header-title {
-            font-size: 20px;
-            font-weight: bold;
+        .topbar-title {
+            font-size: 22px;
+            font-weight: 600;
         }
 
-        .admin-info {
+        .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        /* CONTENT */
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+
+        /* =========================
+       CONTENT
+    ========================= */
 
         .content {
-            padding: 25px;
+            padding: 30px;
         }
 
-        /* CARDS */
 
-        .stats {
-            display: grid;
+        /* =========================
+       RESPONSIVE
+    ========================= */
 
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-
-            padding: 22px;
-
-            border-radius: 10px;
-
-            border: 1px solid #e5e7eb;
-        }
-
-        .card-title {
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        .card-value {
-            font-size: 28px;
-            font-weight: bold;
-            margin-top: 8px;
-        }
-
-        .section {
-            margin-top: 25px;
-        }
-
-        .logout-button {
-            background: none;
-            border: none;
-            color: #dc2626;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        @media (max-width: 1000px) {
-
-            .stats {
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
-
-        }
-
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
 
             .sidebar {
-                width: 200px;
+                width: 70px;
+            }
+
+            .sidebar-logo {
+                justify-content: center;
+                padding: 0;
+            }
+
+            .sidebar-logo h2 {
+                font-size: 0;
+            }
+
+            .sidebar-logo h2::after {
+                content: "A";
+                font-size: 22px;
+            }
+
+            .menu-title {
+                display: none;
+            }
+
+            .menu-item {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .menu-item span:not(.menu-icon) {
+                display: none;
             }
 
             .main {
-                margin-left: 200px;
-                width: calc(100% - 200px);
+                margin-left: 70px;
+                width: calc(100% - 70px);
             }
 
-            .stats {
-                grid-template-columns: 1fr;
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .user-name,
+            .user-role {
+                display: none;
             }
 
         }
-
     </style>
+
+    @stack('styles')
 
 </head>
 
 <body>
 
-<div class="admin-layout">
+    <div class="admin-layout">
 
-    <!-- SIDEBAR -->
+        <!-- =========================
+     SIDEBAR
+========================== -->
 
-    <aside class="sidebar">
-
-        <div class="logo">
-            TikTok Affiliate
-        </div>
-
-        <nav class="menu">
-
-            <a
-                href="{{ route('admin.dashboard') }}"
-                class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-            >
-                Dashboard
-            </a>
-
-            <a href="">
-                Sản phẩm
-            </a>
-
-            <a href="">
-                Danh mục
-            </a>
-
-            <a href=" ">
-                Affiliate Links
-            </a>
-
-            <a href="">
-                Click
-            </a>
-
-            <a href="">
-                Đơn hàng
-            </a>
-
-            <a href="">
-                Hoa hồng
-            </a>
-
-            <a href="">
-                Rút tiền
-            </a>
-
-            <a href="">
-                Cài đặt
-            </a>
-
-            <form
-                method="POST"
-                action="{{ route('logout') }}"
-                style="padding: 10px 22px;"
-            >
-
-                @csrf
-
-                <button
-                    type="submit"
-                    class="logout-button"
-                >
-                    Đăng xuất
-                </button>
-
-            </form>
-
-        </nav>
-
-    </aside>
+        <aside class="sidebar">
 
 
-    <!-- MAIN -->
+            <!-- LOGO -->
 
-    <main class="main">
+            <div class="sidebar-logo">
 
-        <!-- HEADER -->
-
-        <header class="header">
-
-            <div class="header-title">
-
-                @yield('page-title', 'Dashboard')
+                <h2>
+                    Affiliate<span>Admin</span>
+                </h2>
 
             </div>
 
-            <div class="admin-info">
 
-                <span>
-                    {{ auth()->user()->name }}
-                </span>
+            <!-- MENU -->
+
+            <div class="sidebar-menu">
+
+
+                <div class="menu-title">
+                    Tổng quan
+                </div>
+
+
+                <!-- DASHBOARD -->
+
+                <a href="{{ route('admin.dashboard') }}"
+                    class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+
+                    <span class="menu-icon">
+                        🏠
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <div class="menu-title">
+                    Quản lý
+                </div>
+
+
+                <!-- CATEGORIES -->
+
+                <a href="{{ route('admin.categories.index') }}"
+                    class="menu-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+
+                    <span class="menu-icon">
+                        📁
+                    </span>
+
+                    <span>
+                        Danh mục
+                    </span>
+
+                </a>
+
+
+                <!-- PRODUCTS -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        📦
+                    </span>
+
+                    <span>
+                        Sản phẩm
+                    </span>
+
+                </a>
+
+
+                <!-- ORDERS -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        🛒
+                    </span>
+
+                    <span>
+                        Đơn hàng
+                    </span>
+
+                </a>
+
+
+                <!-- AFFILIATE -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        🔗
+                    </span>
+
+                    <span>
+                        Affiliate
+                    </span>
+
+                </a>
+
+
+                <!-- CLICKS -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        📊
+                    </span>
+
+                    <span>
+                        Tracking
+                    </span>
+
+                </a>
+
+
+                <div class="menu-title">
+                    Hệ thống
+                </div>
+
+
+                <!-- USERS -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        👥
+                    </span>
+
+                    <span>
+                        Người dùng
+                    </span>
+
+                </a>
+
+
+                <!-- SETTINGS -->
+
+                <a href="#" class="menu-item">
+
+                    <span class="menu-icon">
+                        ⚙️
+                    </span>
+
+                    <span>
+                        Cài đặt
+                    </span>
+
+                </a>
+
 
             </div>
 
-        </header>
+
+            <!-- BOTTOM -->
+
+            <div class="sidebar-bottom">
 
 
-        <!-- CONTENT -->
+                <form method="POST" action="{{ route('logout') }}">
 
-        <div class="content">
+                    @csrf
 
-            @yield('content')
+                    <button type="submit" class="menu-item"
+                        style="
+                    width: 100%;
+                    border: none;
+                    background: transparent;
+                    cursor: pointer;
+                    text-align: left;
+                ">
 
-        </div>
+                        <span class="menu-icon">
+                            🚪
+                        </span>
 
-    </main>
+                        <span>
+                            Đăng xuất
+                        </span>
 
-</div>
+                    </button>
+
+                </form>
+
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- =========================
+     MAIN
+========================== -->
+
+        <main class="main">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+
+                <div class="topbar-title">
+
+                    @yield('page-title')
+
+                </div>
+
+
+                <div class="user-info">
+
+
+                    <div>
+
+                        <div class="user-name">
+
+                            {{ auth()->user()->name }}
+
+                        </div>
+
+                        <div class="user-role">
+
+                            {{ auth()->user()->role }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-avatar">
+
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+
+            <!-- CONTENT -->
+
+            <div class="content">
+
+                @yield('content')
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+    @stack('scripts')
 
 </body>
 
