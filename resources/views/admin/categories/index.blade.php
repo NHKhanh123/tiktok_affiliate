@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Admin Dashboard')
+@section('title', 'Quản lý danh mục')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'Danh mục')
 
 @push('styles')
     <style>
