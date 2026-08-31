@@ -110,6 +110,38 @@
             font-size: 18px;
         }
 
+        /* FILTER */
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input,
+        .select-input {
+            height: 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            padding: 0 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-input {
+            width: 240px;
+        }
+
+        .select-input {
+            width: 150px;
+            background: white;
+        }
+
+        .search-input:focus,
+        .select-input:focus {
+            border-color: #2563eb;
+        }
+
         /* TABLE */
 
         .table-wrapper {
@@ -335,6 +367,28 @@
                         Danh sách danh mục
                     </h2>
 
+                    <div class="filters">
+
+                        <input type="text" class="search-input" placeholder="Tìm kiếm danh mục..." id="category-search">
+
+                        <select class="select-input" id="status-filter">
+
+                            <option value="">
+                                Tất cả trạng thái
+                            </option>
+
+                            <option value="1">
+                                Đang hoạt động
+                            </option>
+
+                            <option value="0">
+                                Đang ẩn
+                            </option>
+
+                        </select>
+
+                    </div>
+
                 </div>
 
 
@@ -342,7 +396,7 @@
 
                     @if ($categories->count())
 
-                        <table>
+                        <table id="categories-table">
 
                             <thead>
 
@@ -380,7 +434,7 @@
                             <tbody>
 
                                 @foreach ($categories as $category)
-                                    <tr>
+                                    <tr data-name="{{ strtolower($category->name) }}" data-status="{{ $category->status }}">
 
                                         <td>
                                             #{{ $category->id }}
@@ -388,15 +442,16 @@
 
 
                                         <td>
-
-                                            @if ($category->image)
-                                                <img src="{{ asset('storage/' . $category->image) }}" class="category-image"
-                                                    alt="{{ $category->name }}">
-                                            @else
-                                                <div class="no-image">
-                                                    No image
-                                                </div>
-                                            @endif
+                                            <div class="category-info">
+                                                @if ($category->image)
+                                                    <img src="{{ asset('storage/' . $category->image) }}"
+                                                        class="category-image" alt="{{ $category->name }}">
+                                                @else
+                                                    <div class="no-image">
+                                                        No image
+                                                    </div>
+                                                @endif
+                                            </div>
 
                                         </td>
 
@@ -522,4 +577,94 @@
 
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const searchInput = document.getElementById('category-search');
+
+            const statusFilter = document.getElementById('status-filter');
+
+            const rows = document.querySelectorAll('#categories-table tbody tr');
+
+
+            function filterProducts() {
+
+                const keyword = searchInput.value.toLowerCase().trim();
+
+                const status = statusFilter.value;
+
+
+                rows.forEach(function(row) {
+
+                    const name = row.dataset.name || '';
+
+                    const rowStatus = row.dataset.status || '';
+
+
+                    const matchName =
+                        name.includes(keyword);
+
+                    const matchStatus =
+                        status === '' || rowStatus === status;
+
+
+                    if (matchName && matchStatus) {
+
+                        row.style.display = '';
+
+                    } else {
+
+                        row.style.display = 'none';
+
+                    }
+
+                });
+
+            }
+
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    'input',
+                    filterProducts
+                );
+
+            }
+
+
+            if (statusFilter) {
+
+                statusFilter.addEventListener(
+                    'change',
+                    filterProducts
+                );
+
+            }
+
+
+            /* SYNC BUTTON */
+
+            const syncForm = document.getElementById('sync-form');
+
+            const syncButton = document.getElementById('sync-button');
+
+
+            if (syncForm && syncButton) {
+
+                syncForm.addEventListener('submit', function() {
+
+                    syncButton.disabled = true;
+
+                    syncButton.classList.add('syncing');
+
+                    syncButton.innerHTML =
+                        '<span class="sync-icon">🔄</span> Đang đồng bộ...';
+
+                });
+
+            }
+
+        });
+    </script>
 @endsection

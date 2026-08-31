@@ -328,7 +328,7 @@
 
                 <!-- PRODUCTS -->
 
-                <a href="#" class="menu-item">
+                <a href="{{ route('admin.products.index') }}" class="menu-item">
 
                     <span class="menu-icon">
                         📦

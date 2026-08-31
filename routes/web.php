@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\TikTok\TikTokController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 
 /*
@@ -171,11 +172,6 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
-        // Route::resource(
-        //     'categories',
-        //     CategoryController::class
-        // );
-
         Route::get('/categories/index', [CategoryController::class, 'index'])->name('admin.categories.index');  
         Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
         Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
@@ -183,6 +179,19 @@ Route::prefix('admin')
         Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
         Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('admin.categories.show');
+           /*
+        |--------------------------------------------------------------------------
+        | Product Management
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/products/index', [ProductController::class, 'index'])->name('admin.products.index');
+        route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+        Route::get('/products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
     });
 
 Route::get(
