@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\TikTok\TikTokController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\AffiliateLinkController;
 
 
 /*
@@ -192,6 +193,19 @@ Route::prefix('admin')
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         Route::get('/products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
+           /*
+        |--------------------------------------------------------------------------
+        | Affiliate Link Management
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/affiliate-links/index', [AffiliateLinkController::class, 'index'])->name('admin.affiliate-links.index');
+        Route::get('/affiliate-links/create', [AffiliateLinkController::class, 'create'])->name('admin.affiliate-links.create');
+        Route::post('/affiliate-links', [AffiliateLinkController::class, 'store'])->name('admin.affiliate-links.store');
+        Route::get('/affiliate-links/{affiliateLink}/edit', [AffiliateLinkController::class, 'edit'])->name('admin.affiliate-links.edit');
+        Route::put('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'update'])->name('admin.affiliate-links.update');
+        Route::delete('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'destroy'])->name('admin.affiliate-links.destroy');
+        Route::get('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'show'])->name('admin.affiliate-links.show');
     });
 
 Route::get(

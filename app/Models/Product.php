@@ -41,4 +41,9 @@ class Product extends Model
             Category::class
         );
     }
+
+    public function affiliateLinks()
+    {
+        return $this->hasOne(AffiliateLink::class);
+    }
 }

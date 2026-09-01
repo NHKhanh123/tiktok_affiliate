@@ -358,7 +358,7 @@
 
                 <!-- AFFILIATE -->
 
-                <a href="#" class="menu-item">
+                <a href="{{ route('admin.affiliate-links.index') }}" class="menu-item">
 
                     <span class="menu-icon">
                         🔗
