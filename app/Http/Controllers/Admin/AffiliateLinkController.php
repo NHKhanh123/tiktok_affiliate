@@ -154,10 +154,6 @@ class AffiliateLinkController extends Controller
         AffiliateLink $affiliateLink
     ) {
         $validated = $request->validate([
-            'product_id' => [
-                'required',
-                'exists:products,id',
-            ],
 
             'name' => [
                 'required',
@@ -190,26 +186,26 @@ class AffiliateLinkController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $exists = AffiliateLink::where(
-            'product_id',
-            $validated['product_id']
-        )
-            ->where(
-                'id',
-                '!=',
-                $affiliateLink->id
-            )
-            ->exists();
+        // $exists = AffiliateLink::where(
+        //     'product_id',
+        //     $validated['product_id']
+        // )
+        //     ->where(
+        //         'id',
+        //         '!=',
+        //         $affiliateLink->id
+        //     )
+        //     ->exists();
 
 
-        if ($exists) {
-            return back()
-                ->withErrors([
-                    'product_id' =>
-                    'Sản phẩm này đã có Affiliate Link khác.'
-                ])
-                ->withInput();
-        }
+        // if ($exists) {
+        //     return back()
+        //         ->withErrors([
+        //             'product_id' =>
+        //             'Sản phẩm này đã có Affiliate Link khác.'
+        //         ])
+        //         ->withInput();
+        // }
 
 
         $validated['status'] =

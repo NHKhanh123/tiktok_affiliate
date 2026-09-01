@@ -11,6 +11,7 @@ use App\Http\Controllers\TikTok\TikTokController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateLinkController;
+use App\Http\Controllers\AffiliateClickController;
 
 
 /*
@@ -217,3 +218,8 @@ Route::get(
     '/tiktok/callback',
     [TikTokController::class, 'callback']
 )->name('tiktok.callback');
+
+Route::get(
+    '/go/{affiliateLink}',
+    [AffiliateClickController::class, 'redirect']
+)->name('affiliate.redirect');
