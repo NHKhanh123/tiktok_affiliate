@@ -272,11 +272,8 @@
             </div>
 
 
-            <div class="pagination-wrapper">
-
-                {{ $affiliateLinks->links() }}
-
-            </div>
+            {{-- Pagination --}}
+            @include('admin.layouts.pagination', ['paginator' => $affiliateLinks])
 
         </div>
 

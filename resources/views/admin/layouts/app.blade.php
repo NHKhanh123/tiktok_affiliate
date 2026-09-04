@@ -373,7 +373,7 @@
 
                 <!-- CLICKS -->
 
-                <a href="#" class="menu-item">
+                <a href="{{ route('admin.clicks.index') }}" class="menu-item">
 
                     <span class="menu-icon">
                         📊

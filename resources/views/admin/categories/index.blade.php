@@ -562,14 +562,8 @@
 
                 </div>
 
-
-                @if ($categories->hasPages())
-                    <div class="pagination">
-
-                        {{ $categories->links() }}
-
-                    </div>
-                @endif
+                {{-- Pagination --}}
+                @include('admin.layouts.pagination', ['paginator' => $categories])
 
             </div>
 

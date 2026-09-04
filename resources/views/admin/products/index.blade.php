@@ -573,14 +573,8 @@
 
         </div>
 
-
         {{-- PAGINATION --}}
-
-        <div class="pagination">
-
-            {{ $products->links() }}
-
-        </div>
+        @include('admin.layouts.pagination', ['paginator' => $products])
 
     </div>
 

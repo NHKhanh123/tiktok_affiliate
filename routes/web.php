@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateLinkController;
 use App\Http\Controllers\AffiliateClickController;
+use App\Http\Controllers\Admin\AffiliateClickController as AdminAffiliateClickController;
 
 
 /*
@@ -207,6 +208,15 @@ Route::prefix('admin')
         Route::put('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'update'])->name('admin.affiliate-links.update');
         Route::delete('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'destroy'])->name('admin.affiliate-links.destroy');
         Route::get('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'show'])->name('admin.affiliate-links.show');
+
+           /*
+        |--------------------------------------------------------------------------
+        | Affiliate Click Tracking
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/clicks', [AdminAffiliateClickController::class, 'index'])->name('admin.clicks.index');
+
     });
 
 Route::get(
