@@ -437,7 +437,7 @@
                                     <tr data-name="{{ strtolower($category->name) }}" data-status="{{ $category->status }}">
 
                                         <td>
-                                            #{{ $category->id }}
+                                            #{{ $categories->firstItem() + $loop->index }}
                                         </td>
 
 

@@ -32,4 +32,9 @@ class AffiliateClick extends Model
     {
         return $this->belongsTo(AffiliateLink::class);
     }
+
+    public function affiliateOrder()
+    {
+        return $this->hasOne(AffiliateOrder::class);
+    }
 }

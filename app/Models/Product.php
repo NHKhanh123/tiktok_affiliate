@@ -53,4 +53,11 @@ class Product extends Model
             AffiliateClick::class
         );
     }
+
+    public function affiliateOrders()
+    {
+        return $this->hasMany(
+            AffiliateOrder::class
+        );
+    }
 }

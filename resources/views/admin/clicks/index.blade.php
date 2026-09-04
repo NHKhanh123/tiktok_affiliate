@@ -251,7 +251,7 @@
                     <tr>
 
                         <th>
-                            Id
+                            ID
                         </th>
 
                         <th>
@@ -285,7 +285,7 @@
                         <tr>
 
                             <td>
-                                {{ $click->id }}
+                                #{{ $clicks->firstItem() + $loop->index }}
                             </td>
 
 

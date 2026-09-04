@@ -147,7 +147,7 @@
                             <tr>
 
                                 <td>
-                                    #{{ $affiliateLink->id }}
+                                    #{{ $affiliateLinks->firstItem() + $loop->index }}
                                 </td>
 
 

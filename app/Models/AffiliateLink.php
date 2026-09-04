@@ -35,4 +35,9 @@ class AffiliateLink extends Model
     {
         return $this->hasMany(AffiliateOrder::class);
     }
+
+    public function affiliateOrders()
+    {
+        return $this->hasMany(AffiliateOrder::class);
+    }
 }

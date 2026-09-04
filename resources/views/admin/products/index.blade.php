@@ -383,7 +383,7 @@
                     <tr>
 
                         <th>
-                            #
+                            ID
                         </th>
 
                         <th>
@@ -421,7 +421,7 @@
                         <tr>
 
                             <td>
-                                {{ $products->firstItem() + $loop->index }}
+                                #{{ $products->firstItem() + $loop->index }}
                             </td>
 
 

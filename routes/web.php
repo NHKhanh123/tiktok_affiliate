@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateLinkController;
 use App\Http\Controllers\AffiliateClickController;
 use App\Http\Controllers\Admin\AffiliateClickController as AdminAffiliateClickController;
+use App\Http\Controllers\Admin\AffiliateOrderController;
 
 
 /*
@@ -216,6 +217,24 @@ Route::prefix('admin')
         */
 
         Route::get('/clicks', [AdminAffiliateClickController::class, 'index'])->name('admin.clicks.index');
+
+         /*
+        |--------------------------------------------------------------------------
+        | Affiliate Orders
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/affiliate-orders',
+            [AffiliateOrderController::class, 'index']
+        )->name('admin.affiliate-orders.index');
+
+
+        Route::get(
+            '/affiliate-orders/{affiliateOrder}',
+            [AffiliateOrderController::class, 'show']
+        )->name('admin.affiliate-orders.show');
+
 
     });
 

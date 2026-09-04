@@ -343,7 +343,7 @@
 
                 <!-- ORDERS -->
 
-                <a href="#" class="menu-item">
+                <a href="{{ route('admin.affiliate-orders.index') }}" class="menu-item">
 
                     <span class="menu-icon">
                         🛒
