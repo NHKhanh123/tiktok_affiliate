@@ -15,7 +15,9 @@ use App\Http\Controllers\AffiliateClickController;
 use App\Http\Controllers\Admin\AffiliateClickController as AdminAffiliateClickController;
 use App\Http\Controllers\Admin\AffiliateOrderController;
 
+use App\Http\Controllers\Admin\TikTokTestController;
 
+Route::get( '/admin/tiktok/test/shops', [TikTokTestController::class, 'shops'] )->name('admin.tiktok.test.shops');
 /*
 |--------------------------------------------------------------------------
 | Trang chủ
