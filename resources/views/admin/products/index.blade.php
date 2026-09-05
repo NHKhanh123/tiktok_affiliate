@@ -574,7 +574,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        @include('admin.layouts.pagination', ['paginator' => $products])
+        @include('layouts.pagination', ['paginator' => $products])
 
     </div>
 

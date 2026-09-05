@@ -10,12 +10,11 @@ class ProductImage extends Model
     protected $fillable = [
         'product_id',
         'image_url',
-        'sort_order',
         'is_primary',
+        'sort_order',
     ];
 
     protected $casts = [
-        'sort_order' => 'integer',
         'is_primary' => 'boolean',
     ];
 

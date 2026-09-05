@@ -14,17 +14,57 @@ use App\Http\Controllers\Admin\AffiliateLinkController;
 use App\Http\Controllers\AffiliateClickController;
 use App\Http\Controllers\Admin\AffiliateClickController as AdminAffiliateClickController;
 use App\Http\Controllers\Admin\AffiliateOrderController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController as FrontendProductController;
+use App\Http\Controllers\CategoryController as FrontendCategoryController;
+use App\Http\Controllers\AffiliateRedirectController;
+use App\Http\Controllers\SearchController;
 
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+
+Route::get('/go/{product:slug}', [AffiliateRedirectController::class, 'redirect'])
+    ->name('affiliate.redirect');
 
 /*
 |--------------------------------------------------------------------------
-| Trang chủ
+| FRONTEND PRODUCTS
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/san-pham', [FrontendProductController::class, 'index'])
+    ->name('products.index');
+
+Route::get('/san-pham/{product:slug}', [FrontendProductController::class, 'show'])
+    ->name('products.show');
+
+// Route::get('/tim-kiem', [FrontendProductController::class, 'search'])
+//     ->name('products.search');
+
+/*
+|--------------------------------------------------------------------------
+| FRONTEND CATEGORIES
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/danh-muc',
+    [FrontendCategoryController::class, 'index']
+)->name('categories.index');
+
+Route::get('/danh-muc/{category:slug}', [FrontendCategoryController::class, 'show'])
+    ->name('categories.show');
+
+/*
+|--------------------------------------------------------------------------
+| Frontend Search
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/tim-kiem',
+    [SearchController::class, 'index']
+)->name('search');
 
 
 /*
@@ -106,11 +146,10 @@ Route::middleware('auth')->group(function () {
                     'message',
                     'Email của bạn đã được xác minh thành công.'
                 );
-
         }
     )
-    ->middleware('signed')
-    ->name('verification.verify');
+        ->middleware('signed')
+        ->name('verification.verify');
 
 
     /*
@@ -129,12 +168,10 @@ Route::middleware('auth')->group(function () {
                 'message',
                 'Email xác minh đã được gửi lại.'
             );
-
         }
     )
-    ->middleware('throttle:6,1')
-    ->name('verification.send');
-
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 });
 
 
@@ -170,20 +207,20 @@ Route::prefix('admin')
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
 
-           /*
+        /*
         |--------------------------------------------------------------------------
         | Category Management
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/categories/index', [CategoryController::class, 'index'])->name('admin.categories.index');  
+        Route::get('/categories/index', [CategoryController::class, 'index'])->name('admin.categories.index');
         Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
         Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
         Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
         Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
         Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
         Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('admin.categories.show');
-           /*
+        /*
         |--------------------------------------------------------------------------
         | Product Management
         |--------------------------------------------------------------------------
@@ -196,7 +233,7 @@ Route::prefix('admin')
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         Route::get('/products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
-           /*
+        /*
         |--------------------------------------------------------------------------
         | Affiliate Link Management
         |--------------------------------------------------------------------------
@@ -210,7 +247,7 @@ Route::prefix('admin')
         Route::delete('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'destroy'])->name('admin.affiliate-links.destroy');
         Route::get('/affiliate-links/{affiliateLink}', [AffiliateLinkController::class, 'show'])->name('admin.affiliate-links.show');
 
-           /*
+        /*
         |--------------------------------------------------------------------------
         | Affiliate Click Tracking
         |--------------------------------------------------------------------------
@@ -218,7 +255,7 @@ Route::prefix('admin')
 
         Route::get('/clicks', [AdminAffiliateClickController::class, 'index'])->name('admin.clicks.index');
 
-         /*
+        /*
         |--------------------------------------------------------------------------
         | Affiliate Orders
         |--------------------------------------------------------------------------
@@ -234,8 +271,6 @@ Route::prefix('admin')
             '/affiliate-orders/{affiliateOrder}',
             [AffiliateOrderController::class, 'show']
         )->name('admin.affiliate-orders.show');
-
-
     });
 
 Route::get(

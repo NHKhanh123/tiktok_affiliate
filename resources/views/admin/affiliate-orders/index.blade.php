@@ -481,7 +481,7 @@
                 PAGINATION
             ================================================== --}}
 
-                @include('admin.layouts.pagination', ['paginator' => $orders])
+                @include('layouts.pagination', ['paginator' => $orders])
 
             </div>
 

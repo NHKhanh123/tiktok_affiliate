@@ -351,7 +351,7 @@
         </div>
 
         {{-- Pagination --}}
-        @include('admin.layouts.pagination', ['paginator' => $clicks])
+        @include('layouts.pagination', ['paginator' => $clicks])
 
     </div>
 

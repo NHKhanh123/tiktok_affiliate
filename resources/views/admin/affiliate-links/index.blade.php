@@ -273,7 +273,7 @@
 
 
             {{-- Pagination --}}
-            @include('admin.layouts.pagination', ['paginator' => $affiliateLinks])
+            @include('layouts.pagination', ['paginator' => $affiliateLinks])
 
         </div>
 
