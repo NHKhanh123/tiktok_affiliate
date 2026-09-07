@@ -10,25 +10,21 @@ class AffiliateOrder extends Model
 {
     protected $fillable = [
 
+        'user_id',
+
         'product_id',
         'affiliate_link_id',
-        'affiliate_click_id',
 
-        'tiktok_order_id',
-        'tiktok_product_id',
-        'tiktok_shop_id',
+        'external_order_id',
 
         'order_amount',
-        'product_amount',
-        'refund_amount',
+        'currency',
 
-        'status',
+        'order_status',
+        'attribution_type',
 
         'ordered_at',
-        'paid_at',
         'completed_at',
-
-        'raw_data',
     ];
 
 
@@ -36,18 +32,22 @@ class AffiliateOrder extends Model
 
         'order_amount' => 'decimal:2',
 
-        'product_amount' => 'decimal:2',
-
-        'refund_amount' => 'decimal:2',
-
         'ordered_at' => 'datetime',
 
-        'paid_at' => 'datetime',
-
         'completed_at' => 'datetime',
-
-        'raw_data' => 'array',
     ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | User
+    |--------------------------------------------------------------------------
+    */
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
     /*
@@ -70,9 +70,7 @@ class AffiliateOrder extends Model
 
     public function affiliateLink(): BelongsTo
     {
-        return $this->belongsTo(
-            AffiliateLink::class
-        );
+        return $this->belongsTo(AffiliateLink::class);
     }
 
 
@@ -82,11 +80,9 @@ class AffiliateOrder extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function affiliateClick(): BelongsTo
+    public function affiliateClick()
     {
-        return $this->belongsTo(
-            AffiliateClick::class
-        );
+        return $this->belongsTo(AffiliateClick::class);
     }
 
 
@@ -98,8 +94,6 @@ class AffiliateOrder extends Model
 
     public function commission(): HasOne
     {
-        return $this->hasOne(
-            Commission::class
-        );
+        return $this->hasOne(Commission::class);
     }
 }

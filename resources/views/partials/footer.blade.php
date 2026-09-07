@@ -1,114 +1,132 @@
-<footer class="mt-20 border-t border-gray-200 bg-white">
+    <footer class="border-t border-gray-200 bg-gray-950 text-gray-300">
 
-    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
 
-        <div class="grid gap-10 md:grid-cols-4">
+            <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
-            {{-- Brand --}}
-            <div class="md:col-span-2">
 
-                <div class="flex items-center gap-2">
+                {{-- ABOUT --}}
+                <div>
 
-                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-black text-white font-bold">
-                        TA
-                    </div>
-
-                    <span class="text-lg font-bold">
+                    <a href="{{ route('home') }}" class="text-xl font-black text-white">
                         TikTok Affiliate
-                    </span>
+                    </a>
+
+                    <p class="mt-4 max-w-sm text-sm leading-7 text-gray-400">
+                        Khám phá những sản phẩm được chọn lọc và tìm
+                        kiếm sản phẩm phù hợp trên TikTok Shop.
+                    </p>
 
                 </div>
 
-                <p class="mt-4 max-w-md text-sm leading-6 text-gray-500">
-                    Khám phá những sản phẩm nổi bật, sản phẩm đang được
-                    quan tâm và các ưu đãi hấp dẫn trên TikTok Shop.
-                </p>
+
+                {{-- NAVIGATION --}}
+                <div>
+
+                    <h3 class="text-sm font-semibold text-white">
+                        Điều hướng
+                    </h3>
+
+                    <ul class="mt-4 space-y-3 text-sm">
+
+                        <li>
+                            <a href="{{ route('home') }}" class="hover:text-white">
+                                Trang chủ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('products.index') }}" class="hover:text-white">
+                                Tất cả sản phẩm
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('categories.index') }}" class="hover:text-white">
+                                Danh mục
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('search') }}" class="hover:text-white">
+                                Tìm kiếm
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                {{-- CATEGORIES --}}
+                <div>
+
+                    <h3 class="text-sm font-semibold text-white">
+                        Khám phá
+                    </h3>
+
+                    <ul class="mt-4 space-y-3 text-sm">
+
+                        @foreach ($footerCategories ?? [] as $category)
+                            <li>
+
+                                <a href="{{ route('categories.show', $category->slug) }}" class="hover:text-white">
+                                    {{ $category->name }}
+                                </a>
+
+                            </li>
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+
+                {{-- INFORMATION --}}
+                <div>
+
+                    <h3 class="text-sm font-semibold text-white">
+                        Thông tin
+                    </h3>
+
+                    <ul class="mt-4 space-y-3 text-sm">
+
+                        <li>
+                            <span class="text-gray-400">
+                                Sản phẩm được chọn lọc từ TikTok Shop.
+                            </span>
+                        </li>
+
+                        <li>
+                            <span class="text-gray-400">
+                                Giá và tình trạng sản phẩm có thể thay đổi.
+                            </span>
+                        </li>
+
+                    </ul>
+
+                </div>
 
             </div>
 
 
-            {{-- Navigation --}}
-            <div>
+            {{-- COPYRIGHT --}}
+            <div class="mt-12 border-t border-gray-800 pt-6">
 
-                <h3 class="text-sm font-semibold text-gray-900">
-                    Khám phá
-                </h3>
+                <div class="flex flex-col gap-3 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between">
 
-                <ul class="mt-4 space-y-3 text-sm text-gray-500">
+                    <p>
+                        © {{ date('Y') }} TikTok Affiliate. All rights reserved.
+                    </p>
 
-                    <li>
-                        <a href="{{ route('products.index') }}" class="hover:text-gray-900">
-                            Tất cả sản phẩm
-                        </a>
-                    </li>
+                    <p>
+                        Nội dung và thông tin sản phẩm có thể thay đổi theo TikTok Shop.
+                    </p>
 
-                    <li>
-                        <a href="#featured" class="hover:text-gray-900">
-                            Sản phẩm nổi bật
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#categories" class="hover:text-gray-900">
-                            Danh mục
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-            {{-- Information --}}
-            <div>
-
-                <h3 class="text-sm font-semibold text-gray-900">
-                    Thông tin
-                </h3>
-
-                <ul class="mt-4 space-y-3 text-sm text-gray-500">
-
-                    <li>
-                        <a href="#" class="hover:text-gray-900">
-                            Giới thiệu
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="hover:text-gray-900">
-                            Chính sách bảo mật
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="hover:text-gray-900">
-                            Điều khoản sử dụng
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="hover:text-gray-900">
-                            Liên hệ
-                        </a>
-                    </li>
-
-                </ul>
+                </div>
 
             </div>
 
         </div>
 
-
-        {{-- Bottom --}}
-        <div class="mt-10 border-t border-gray-100 pt-6">
-
-            <p class="text-center text-xs text-gray-400">
-                © {{ date('Y') }} TikTok Affiliate.
-                All rights reserved.
-            </p>
-
-        </div>
-
-    </div>
-
-</footer>
+    </footer>

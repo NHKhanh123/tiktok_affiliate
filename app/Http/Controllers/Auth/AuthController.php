@@ -12,11 +12,15 @@ class AuthController extends Controller
 {
     /**
      * Hiển thị trang đăng nhập.
+     *
+     * Hiện tại website sử dụng Login Modal,
+     * nhưng vẫn giữ method này để tránh lỗi route login.
      */
     public function showLogin(): View
     {
         return view('auth.login');
     }
+
 
     /**
      * Xử lý đăng nhập.
@@ -28,45 +32,133 @@ class AuthController extends Controller
                 'required',
                 'email',
             ],
+
             'password' => [
                 'required',
                 'string',
             ],
         ]);
 
+
         $remember = $request->boolean('remember');
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Kiểm tra tài khoản
+        |--------------------------------------------------------------------------
+        */
+
         if (!Auth::attempt($credentials, $remember)) {
-            return back()
+            return redirect()
+                ->route('home')
                 ->withErrors([
                     'email' => 'Email hoặc mật khẩu không chính xác.',
                 ])
-                ->onlyInput('email');
+                ->withInput($request->only('email'))
+                ->with('open_login_modal', true);
         }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Regenerate session
+        |--------------------------------------------------------------------------
+        */
 
         $request->session()->regenerate();
 
+
         $user = Auth::user();
 
-        if ($user && method_exists($user, 'hasVerifiedEmail') && !$user->hasVerifiedEmail()) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Kiểm tra email đã xác minh
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $user &&
+            method_exists($user, 'hasVerifiedEmail') &&
+            !$user->hasVerifiedEmail()
+        ) {
+
             Auth::logout();
 
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
             return redirect()
-                ->route('verification.notice')
-                ->withErrors([
-                    'email' => 'Email của bạn chưa được xác minh.',
-                ]);
+                ->route('home')
+                ->with(
+                    'warning',
+                    'Email của bạn chưa được xác minh. Vui lòng kiểm tra email để xác minh tài khoản.'
+                );
         }
 
-        return match ($user->role) {
-            'admin' => redirect()->route('admin.dashboard'),
-            'user' => redirect()->route('home'),
-            default => $this->logoutInvalidUser(
+
+        /*
+        |--------------------------------------------------------------------------
+        | Kiểm tra role
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$user) {
+
+            return $this->logoutInvalidUser(
                 $request,
-                'Tài khoản không có quyền truy cập hợp lệ.'
-            ),
-        };
+                'Không thể xác định tài khoản đăng nhập.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'admin') {
+
+            return redirect()
+                ->route('admin.dashboard')
+                ->with(
+                    'success',
+                    'Đăng nhập thành công. Chào mừng quản trị viên!'
+                );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | USER
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'user') {
+
+            return redirect()
+                ->route('home')
+                ->with(
+                    'success',
+                    'Đăng nhập thành công. Chào mừng bạn trở lại!'
+                );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Role không hợp lệ
+        |--------------------------------------------------------------------------
+        */
+
+        return $this->logoutInvalidUser(
+            $request,
+            'Tài khoản không có quyền truy cập hợp lệ.'
+        );
     }
+
 
     /**
      * Đăng xuất.
@@ -75,11 +167,32 @@ class AuthController extends Controller
     {
         Auth::logout();
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Xóa session
+        |--------------------------------------------------------------------------
+        */
+
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Thông báo
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route('home')
+            ->with(
+                'success',
+                'Bạn đã đăng xuất thành công.'
+            );
     }
+
 
     /**
      * Đăng xuất tài khoản có role không hợp lệ.
@@ -88,15 +201,17 @@ class AuthController extends Controller
         Request $request,
         string $message
     ): RedirectResponse {
+
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()
-            ->route('login')
-            ->withErrors([
-                'email' => $message,
-            ]);
+            ->route('home')
+            ->with(
+                'error',
+                $message
+            );
     }
 }

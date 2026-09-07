@@ -10,6 +10,7 @@ class AffiliateClick extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'user_id',
         'product_id',
         'affiliate_link_id',
         'session_id',
@@ -22,6 +23,10 @@ class AffiliateClick extends Model
     protected $casts = [
         'clicked_at' => 'datetime',
     ];
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function product(): BelongsTo
     {

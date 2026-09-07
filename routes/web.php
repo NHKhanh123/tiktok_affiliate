@@ -19,6 +19,8 @@ use App\Http\Controllers\ProductController as FrontendProductController;
 use App\Http\Controllers\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\AffiliateRedirectController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountOrderController;
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
@@ -113,6 +115,42 @@ Route::post(
 */
 
 Route::middleware('auth')->group(function () {
+
+  /*
+    |--------------------------------------------------------------------------
+    | Account
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/tai-khoan', [
+        AccountController::class,
+        'profile'
+    ])->name('profile');
+
+
+    Route::put('/tai-khoan', [
+        AccountController::class,
+        'update'
+    ])->name('profile.update');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Orders
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/tai-khoan/don-hang', [
+        AccountOrderController::class,
+        'index'
+    ])->name('account.orders.index');
+
+
+    Route::get('/tai-khoan/don-hang/{order}', [
+        AccountOrderController::class,
+        'show'
+    ])->name('account.orders.show');
+
 
     /*
     |--------------------------------------------------------------------------
