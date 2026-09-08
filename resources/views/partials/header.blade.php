@@ -11,7 +11,8 @@
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
 
                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-black font-bold text-white">
-                    TA
+                    <img src="{{ asset('storage/logo.png') }}" alt="Logo" loading="lazy"
+                        class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                 </div>
 
                 <div class="hidden sm:block">
